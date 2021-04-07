@@ -1,75 +1,37 @@
 import {
   CContainer,
   CRow,
-  CInput,
-  CInputGroup,
-  CInputGroupAppend,
-  CInputGroupPrepend,
-  CInputGroupText,
-  CCollapse,
-  CCardBody,
-  CButton,
   CBadge,
+  CCol,
+  CCallout,
   CDataTable,
+  CNavbar,
+  CToggler,
+  CNavbarBrand,
+  CCollapse,
+  CNavbarNav,
+  CNavLink,
+  CForm,
+  CInput,
+  CButton,
+  CDropdown,
+  CDropdownToggle,
+  CDropdownMenu,
+  CDropdownItem,
+  CCardBody,
+  CImg,
 } from '@coreui/react';
-import CIcon from '@coreui/icons-react';
+import { freeSet } from '@coreui/icons';
+import { CIcon } from '@coreui/icons-react';
 import React, { useState } from 'react';
 
-const usersData = [
-  { id: 0, name: 'John Doe', registered: '2018/01/01', role: 'Guest', status: 'Pending' },
-  { id: 1, name: 'Samppa Nori', registered: '2018/01/01', role: 'Member', status: 'Active' },
-  { id: 2, name: 'Estavan Lykos', registered: '2018/02/01', role: 'Staff', status: 'Banned' },
-  { id: 3, name: 'Chetan Mohamed', registered: '2018/02/01', role: 'Admin', status: 'Inactive' },
-  { id: 4, name: 'Derick Maximinus', registered: '2018/03/01', role: 'Member', status: 'Pending' },
-  { id: 5, name: 'Friderik Dávid', registered: '2018/01/21', role: 'Staff', status: 'Active' },
-  { id: 6, name: 'Yiorgos Avraamu', registered: '2018/01/01', role: 'Member', status: 'Active' },
-  { id: 7, name: 'Avram Tarasios', registered: '2018/02/01', role: 'Staff', status: 'Banned' },
-  { id: 8, name: 'Quintin Ed', registered: '2018/02/01', role: 'Admin', status: 'Inactive' },
-  { id: 9, name: 'Enéas Kwadwo', registered: '2018/03/01', role: 'Member', status: 'Pending' },
-  { id: 10, name: 'Agapetus Tadeáš', registered: '2018/01/21', role: 'Staff', status: 'Active' },
-  { id: 11, name: 'Carwyn Fachtna', registered: '2018/01/01', role: 'Member', status: 'Active' },
-  { id: 12, name: 'Nehemiah Tatius', registered: '2018/02/01', role: 'Staff', status: 'Banned' },
-  { id: 13, name: 'Ebbe Gemariah', registered: '2018/02/01', role: 'Admin', status: 'Inactive' },
-  {
-    id: 14,
-    name: 'Eustorgios Amulius',
-    registered: '2018/03/01',
-    role: 'Member',
-    status: 'Pending',
-  },
-  { id: 15, name: 'Leopold Gáspár', registered: '2018/01/21', role: 'Staff', status: 'Active' },
-  { id: 16, name: 'Pompeius René', registered: '2018/01/01', role: 'Member', status: 'Active' },
-  { id: 17, name: 'Paĉjo Jadon', registered: '2018/02/01', role: 'Staff', status: 'Banned' },
-  {
-    id: 18,
-    name: 'Micheal Mercurius',
-    registered: '2018/02/01',
-    role: 'Admin',
-    status: 'Inactive',
-  },
-  {
-    id: 19,
-    name: 'Ganesha Dubhghall',
-    registered: '2018/03/01',
-    role: 'Member',
-    status: 'Pending',
-  },
-  { id: 20, name: 'Hiroto Šimun', registered: '2018/01/21', role: 'Staff', status: 'Active' },
-  { id: 21, name: 'Vishnu Serghei', registered: '2018/01/01', role: 'Member', status: 'Active' },
-  { id: 22, name: 'Zbyněk Phoibos', registered: '2018/02/01', role: 'Staff', status: 'Banned' },
-  { id: 23, name: 'Aulus Agmundr', registered: '2018/01/01', role: 'Member', status: 'Pending' },
-  {
-    id: 42,
-    name: 'Ford Prefect',
-    registered: '2001/05/25',
-    role: 'Alien',
-    status: "Don't panic!",
-  },
-];
+// @ts-ignore
+import foodieData from '../../data/seoulbitz_foodie';
+import { Link } from 'react-router-dom';
 
 function Main() {
   const [details, setDetails] = useState([]);
-  // const [items, setItems] = useState(usersData)
+  const [isOpen, setIsOpen] = useState(false);
 
   const toggleDetails = index => {
     const position = details.indexOf(index);
@@ -83,10 +45,20 @@ function Main() {
   };
 
   const fields = [
-    { key: 'name', _style: { width: '40%' } },
-    'registered',
-    { key: 'role', _style: { width: '20%' } },
-    { key: 'status', _style: { width: '20%' } },
+    { key: 'title', _style: { width: '25%' } },
+    {
+      key: 'like',
+      _style: { width: '5%' },
+      filter: false,
+    },
+    { key: 'tag', _style: { width: '5%' } },
+    { key: 'addr', _style: { width: '30%' } },
+    {
+      key: 'insta',
+      _style: { width: '10%' },
+      sorter: false,
+      filter: false,
+    },
     {
       key: 'show_details',
       label: '',
@@ -96,52 +68,59 @@ function Main() {
     },
   ];
 
-  const getBadge = status => {
-    switch (status) {
-      case 'Active':
-        return 'success';
-      case 'Inactive':
-        return 'secondary';
-      case 'Pending':
-        return 'warning';
-      case 'Banned':
-        return 'danger';
-      default:
-        return 'primary';
-    }
-  };
+  function getDataLength() {
+    return 251;
+  }
 
   return (
     <CContainer>
-      <CRow className={'w-50 mt-5 mx-auto col-12 d-flex justify-content-center'}>
-        <CInputGroup>
-          <CInputGroupPrepend>
-            <CInputGroupText className={'bg-info text-white'}>역검색</CInputGroupText>
-          </CInputGroupPrepend>
-          <CInput type="text" id="search-station" name="search-station" autoComplete="name" />
-          <CInputGroupAppend>
-            <CInputGroupText className={'bg-info text-white'}>
-              <CIcon name={'cilUser'} />
-            </CInputGroupText>
-          </CInputGroupAppend>
-        </CInputGroup>
-      </CRow>
+      <CNavbar expandable="sm" color="info">
+        <CToggler inNavbar onClick={() => setIsOpen(!isOpen)} />
+        <CNavbarBrand>Seoulbitz</CNavbarBrand>
+        <CCollapse show={isOpen} navbar>
+          <CNavbarNav>
+            <Link to="/">Home</Link>
+            <Link to="/search">Search</Link>
+          </CNavbarNav>
+        </CCollapse>
+      </CNavbar>
       <CRow>
+        <CCol cols={12} sm="6">
+          <CCallout color="info" className={'bg-white'}>
+            <small className="text-muted">총 음식점 수</small>
+            <br />
+            <strong className="h4">{getDataLength()}</strong>
+          </CCallout>
+        </CCol>
+        <CCol cols={12} sm="6">
+          <CCallout color="danger" className={'bg-white'}>
+            <small className="text-muted">Recurring Clients</small>
+            <br />
+            <strong className="h4">22,643</strong>
+          </CCallout>
+        </CCol>
+      </CRow>
+      <CRow className={'w-100 mt-5 mx-auto col-12'}>
         <CDataTable
-          items={usersData}
+          items={foodieData}
           fields={fields}
           columnFilter
           tableFilter
-          footer
-          itemsPerPageSelect
-          itemsPerPage={5}
+          itemsPerPage={20}
           hover
           sorter
           pagination
           scopedSlots={{
-            status: item => (
+            tag: item => (
               <td>
-                <CBadge color={getBadge(item.status)}>{item.status}</CBadge>
+                <CBadge color={'success'}>{item.tag}</CBadge>
+              </td>
+            ),
+            insta: item => (
+              <td>
+                <a href={item.insta} target="_blank" rel="noreferrer" className={'black'}>
+                  <CIcon content={freeSet.cilExternalLink} />
+                </a>
               </td>
             ),
             show_details: (item, index) => {
@@ -165,14 +144,9 @@ function Main() {
               return (
                 <CCollapse show={details.includes(index)}>
                   <CCardBody>
-                    <h4>{item.username}</h4>
-                    <p className="text-muted">User since: {item.registered}</p>
-                    <CButton size="sm" color="info">
-                      User Settings
-                    </CButton>
-                    <CButton size="sm" color="danger" className="ml-1">
-                      Delete
-                    </CButton>
+                    <CImg src={item.thumb} width={300} height={300}></CImg>
+                    <h4>{item.title}</h4>
+                    <p className="text-muted">Instagram: {item.insta}</p>
                   </CCardBody>
                 </CCollapse>
               );
