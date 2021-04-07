@@ -9,8 +9,10 @@ import {
   CCardBody,
   CImg,
 } from "@coreui/react";
+
 // @ts-ignore
 import foodieData from "../../data/foodie";
+
 function DataTableContainer() {
   const [details, setDetails] = useState([]);
 

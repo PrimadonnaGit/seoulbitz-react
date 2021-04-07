@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import Header from "./../../components/Header/index";
 import DataTableContainer from "./../../components/DataTableContainer/index";
