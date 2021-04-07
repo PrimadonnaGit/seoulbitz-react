@@ -1,8 +1,20 @@
 {
-	"short_name": "Seoulbitz | React",
-	"name": "Seoulbitz on React",
-	"start_url": ".",
-	"display": "standalone",
-	"theme_color": "#000000",
-	"background_color": "#ffffff"
+  "short_name": "Seoulbitz | React",
+  "name": "Seoulbitz on React",
+  "start_url": ".",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
 }
