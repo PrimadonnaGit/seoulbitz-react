@@ -57,6 +57,7 @@ function DataTableContainer() {
             hover
             sorter
             pagination
+            responsive
             scopedSlots={{
               title: (item) => (
                 <td>
@@ -105,10 +106,10 @@ function DataTableContainer() {
                       {item.imgList.split(",").map((img) => {
                         return (
                           <CImg
-                            className={"m-2"}
+                            className={"m-1"}
                             src={img}
-                            width={300}
-                            height={300}
+                            width={150}
+                            height={150}
                           ></CImg>
                         );
                       })}

@@ -7,8 +7,8 @@ import Search from "./pages/Search";
 function App() {
   return (
     <BrowserRouter>
-      <Route path="/" component={Main} exact />
-      <Route path="/search" component={Search} />
+      <Route path="/" component={Search} exact />
+      <Route path="/search" component={Main} />
     </BrowserRouter>
   );
 }

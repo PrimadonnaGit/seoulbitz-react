@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import markerImage from "../../data/img/pin_blue.png";
+
 // @ts-ignore
 const { kakao } = window;
 
 const MapContainer = ({ searchPlace, foodieData }) => {
   const icon = new kakao.maps.MarkerImage(
     markerImage,
-    new kakao.maps.Size(31, 35)
+    new kakao.maps.Size(25, 25)
   );
 
   useEffect(() => {
@@ -53,8 +54,8 @@ const MapContainer = ({ searchPlace, foodieData }) => {
     <div
       id="myMap"
       style={{
-        width: "50%",
-        height: "50vh",
+        width: "100%",
+        height: "60vh",
       }}
     ></div>
   );
