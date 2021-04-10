@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import MapContainer from "src/components/MapContainer";
 import Header from "./../../components/Header/index";
-import { CForm, CFormGroup, CLabel, CInput, CButton } from "@coreui/react";
-import Autocomplete from "react-autocomplete";
+import { CForm, CFormGroup, CInput, CButton } from "@coreui/react";
 // @ts-ignore
 import foodieData from "../../data/foodie";
 // // @ts-ignore
@@ -11,6 +10,10 @@ import foodieData from "../../data/foodie";
 function Search() {
   const [inputText, setInputText] = useState("");
   const [place, setPlace] = useState("");
+  const [currentCoords, setCurrentCoords] = useState({
+    Latitude: 37.50927760377195,
+    Longitude: 127.01968002918031,
+  });
 
   const onChange = (e) => {
     setInputText(e.target.value);
@@ -22,46 +25,37 @@ function Search() {
     setInputText("");
   };
 
-  function getLocation() {
-    if (navigator.geolocation) {
-      // GPS를 지원하면
-      return new Promise((resolve) => {
-        navigator.geolocation.getCurrentPosition(
-          function (position) {
-            console.info(
-              `re:${position.coords.latitude} ${position.coords.longitude}`
-            );
-            resolve({
-              latitude: position.coords.latitude,
-              longitude: position.coords.longitude,
-            });
-          },
-          function (error) {
-            console.error(error);
-            resolve({
-              latitude: 37.3595704,
-              longitude: 127.105399,
-            });
-          },
-          {
-            enableHighAccuracy: false,
-            maximumAge: 0,
-            timeout: Infinity,
-          }
-        );
-      }).then((coords) => {
-        console.log(`coords:${JSON.stringify(coords)}`);
-        return coords;
-      });
+  useEffect(() => {
+    function getLocation() {
+      if (navigator.geolocation) {
+        // GPS를 지원하면
+        return new Promise((resolve) => {
+          navigator.geolocation.getCurrentPosition(
+            function (position) {
+              resolve({
+                Latitude: position.coords.latitude,
+                Longitude: position.coords.longitude,
+              });
+            },
+            function (error) {
+              console.error(error);
+              resolve(currentCoords);
+            },
+            {
+              enableHighAccuracy: true,
+              maximumAge: 0,
+              timeout: Infinity,
+            }
+          );
+        }).then((coords) => {
+          setCurrentCoords(coords);
+        });
+      }
+      console.info("GPS를 지원하지 않습니다");
     }
-    console.info("GPS를 지원하지 않습니다");
-    return {
-      latitude: 37.3595704,
-      longitude: 127.105399,
-    };
-  }
 
-  getLocation();
+    getLocation();
+  }, []);
 
   return (
     <>
@@ -85,6 +79,7 @@ function Search() {
         <MapContainer
           searchPlace={place}
           foodieData={foodieData}
+          currentPlace={currentCoords}
         ></MapContainer>
       </div>
     </>
