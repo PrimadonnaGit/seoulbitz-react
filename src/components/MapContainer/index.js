@@ -27,6 +27,20 @@ const MapContainer = ({ searchPlace, foodieData, currentPlace }) => {
 
     const map = new kakao.maps.Map(container, options);
     const place = new kakao.maps.services.Places();
+    const currentCircle = new kakao.maps.Circle({
+      center: new kakao.maps.LatLng(
+        currentPlace.Latitude,
+        currentPlace.Longitude
+      ), // 원의 중심좌표 입니다
+      radius: 10, // 미터 단위의 원의 반지름입니다
+      strokeWeight: 3, // 선의 두께입니다
+      strokeColor: "red", // 선의 색깔입니다
+      strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+      strokeStyle: "", // 선의 스타일 입니다
+      fillColor: "red", // 채우기 색깔입니다
+      fillOpacity: 0.4, // 채우기 불투명도 입니다
+    });
+    currentCircle.setMap(map);
 
     if (searchPlace !== "") {
       place.keywordSearch(searchPlace, placesSearchCB);
@@ -34,14 +48,6 @@ const MapContainer = ({ searchPlace, foodieData, currentPlace }) => {
         displayMarker(item, defaultIcon, true);
       });
     } else {
-      displayMarker(
-        {
-          x: currentPlace.Longitude,
-          y: currentPlace.Latitude,
-        },
-        currentPositionIcon,
-        false
-      );
       foodieData.map((item) => {
         displayMarker(item, defaultIcon, true);
       });
@@ -61,7 +67,7 @@ const MapContainer = ({ searchPlace, foodieData, currentPlace }) => {
     }
 
     function displayMarker(place, icon, clickable) {
-      let marker = new kakao.maps.Marker({
+      const marker = new kakao.maps.Marker({
         map: map,
         position: new kakao.maps.LatLng(place.y, place.x),
         image: icon,
@@ -69,20 +75,31 @@ const MapContainer = ({ searchPlace, foodieData, currentPlace }) => {
       });
 
       if (clickable) {
-        const iwContent = `<div style="padding:5px;">${place.title}</div>`;
+        const iwContent = `<div class="customoverlay"><a href="${place.insta}" target="_blank" rel="noreferrer"><span class="title">${place.title}</span></a></div>`;
 
-        const infowindow = new kakao.maps.InfoWindow({
-          content: iwContent,
-          removable: false,
+        kakao.maps.event.addListener(marker, "click", function () {
+          const customOverlay = new kakao.maps.CustomOverlay({
+            map: map,
+            position: new kakao.maps.LatLng(place.y, place.x),
+            content: iwContent,
+            yAnchor: 1,
+          });
+          customOverlay.setMap(map);
         });
 
         kakao.maps.event.addListener(marker, "mouseover", function () {
-          infowindow.open(map, marker);
+          const customOverlay = new kakao.maps.CustomOverlay({
+            map: map,
+            position: new kakao.maps.LatLng(place.y, place.x),
+            content: iwContent,
+            yAnchor: 1,
+          });
+          customOverlay.setMap(null);
         });
 
-        kakao.maps.event.addListener(marker, "mouseout", function () {
-          infowindow.close();
-        });
+        // kakao.maps.event.addListener(marker, "mouseout", function () {
+        //   infowindow.close();
+        // });
       }
     }
   }, [searchPlace, currentPlace]);
@@ -92,7 +109,7 @@ const MapContainer = ({ searchPlace, foodieData, currentPlace }) => {
       id="myMap"
       style={{
         width: "100%",
-        height: "60vh",
+        height: "70vh",
       }}
     ></div>
   );
