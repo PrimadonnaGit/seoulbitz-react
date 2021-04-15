@@ -92,6 +92,7 @@ const MapContainer = ({ searchPlace, foodieData, currentPlace }) => {
           position: new kakao.maps.LatLng(place.y, place.x),
           content: iwContent,
           yAnchor: 1,
+          clickable: true,
         });
 
         // 기본 오버레이 닫은 상태
