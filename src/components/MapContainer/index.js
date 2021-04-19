@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import markerImage from "../../data/img/pin_blue.png";
 import currentMarkerImage from "../../data/img/pin_red.png";
+import instaImage from "../../data/img/instagram.png";
 
 // @ts-ignore
 const { kakao } = window;
@@ -18,6 +19,7 @@ const MapContainer = ({ searchPlace, foodieData, currentPlace }) => {
   const [markers, setMarkers] = useState([]);
 
   useEffect(() => {
+    console.log("map", currentPlace);
     const map = new kakao.maps.Map(document.getElementById("myMap"), {
       center: new kakao.maps.LatLng(
         currentPlace.Latitude,
@@ -68,6 +70,7 @@ const MapContainer = ({ searchPlace, foodieData, currentPlace }) => {
     function placesSearchCB(data, status, pagination) {
       if (status === kakao.maps.services.Status.OK) {
         let bounds = new kakao.maps.LatLngBounds();
+        console.log(data);
 
         displayMarker(data[0], currentPositionIcon, false);
         bounds.extend(new kakao.maps.LatLng(data[0].y, data[0].x));
@@ -86,7 +89,20 @@ const MapContainer = ({ searchPlace, foodieData, currentPlace }) => {
       });
 
       if (clickable) {
-        const iwContent = `<div class="customoverlay"><a href="${place.insta}" target="_blank" rel="noreferrer"><span class="title">${place.title}</span></a></div>`;
+        // https://map.kakao.com/?urlLevel=3&q=%EB%B4%87%EB%B4%87%EB%B4%87&map_type=TYPE_MAP
+        const kakaoSearchURL = `https://map.kakao.com/?urlLevel=3&q=${place.title}&map_type=TYPE_MAP`;
+        const iwContent = `<div class="customoverlay">
+          <a class="link insta" href="${place.insta}" target="_blank" rel="noreferrer">
+            <span class="title">
+              ${place.title}
+            </span>
+          </a>
+          </div>
+          <a class="link kakao" href="${kakaoSearchURL}" target="_blank" rel="noreferrer">
+          
+          </a>
+        `;
+
         const customOverlay = new kakao.maps.CustomOverlay({
           map: map,
           position: new kakao.maps.LatLng(place.y, place.x),
@@ -113,15 +129,7 @@ const MapContainer = ({ searchPlace, foodieData, currentPlace }) => {
     }
   }, [searchPlace, currentPlace]);
 
-  return (
-    <div
-      id="myMap"
-      style={{
-        width: "100%",
-        height: "70vh",
-      }}
-    ></div>
-  );
+  return <div id="myMap"></div>;
 };
 
 export default MapContainer;

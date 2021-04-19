@@ -1,17 +1,23 @@
 @import "~@coreui/coreui/scss/coreui";
 
+#myMap {
+  width: 100%;
+  height: 75vh;
+}
+
 .customoverlay {
   position: relative;
-  bottom: 35px;
+  bottom: 25px;
   border-radius: 6px;
   border: 1px solid #ccc;
   border-bottom: 2px solid #ddd;
 }
 .customoverlay:nth-of-type(n) {
   border: 0;
+  border-top: 1px solid #004390;
   box-shadow: 0px 1px 2px #888;
 }
-.customoverlay a {
+.customoverlay a.insta {
   display: block;
   text-decoration: none;
   color: #000;
@@ -20,17 +26,35 @@
   font-size: 14px;
   font-weight: bold;
   overflow: hidden;
-  background: #d95050;
-  background: #d95050
-    url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png)
-    no-repeat right 14px center;
+  background: #fff url("data/img/instagram.png") no-repeat right 12px center;
+  background-size: 20px 20px;
 }
+
+a.kakao {
+  display: block;
+  position: relative;
+  width: 20px;
+  height: 20px;
+  bottom: 56px;
+  right: 37px;
+  float: right;
+  text-decoration: none;
+  color: #000;
+  text-align: center;
+  font-size: 11px;
+  padding: 5px 0px 0px 20px;
+  margin-left: 66px;
+  font-weight: bold;
+  background: url("data/img/kakaomap.png") no-repeat left 0px center;
+  background-size: cover;
+}
+
 .customoverlay .title {
   display: block;
   text-align: center;
   background: #fff;
-  margin-right: 35px;
-  padding: 10px 15px;
+  margin-right: 60px;
+  padding: 10px;
   font-size: 14px;
   font-weight: bold;
 }
@@ -43,4 +67,24 @@
   width: 22px;
   height: 12px;
   background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png");
+}
+
+@keyframes blink {
+  0% {
+    // fill: #fff;
+    stroke: #fff;
+    fill-opacity: 0.3;
+    stroke-opacity: 0.8;
+  }
+  100% {
+    fill: red;
+    stroke: red;
+    fill-opacity: 0.4;
+    stroke-opacity: 1;
+  }
+}
+
+#daum-maps-shape-1 {
+  -webkit-animation: blink 2s ease-in infinite;
+  // animation: blink 2s linear infinite;
 }

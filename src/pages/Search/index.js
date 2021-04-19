@@ -11,8 +11,8 @@ function Search() {
   const [inputText, setInputText] = useState("");
   const [place, setPlace] = useState("");
   const [currentCoords, setCurrentCoords] = useState({
-    Latitude: 37.50927760377195,
-    Longitude: 127.01968002918031,
+    Latitude: 37.5682,
+    Longitude: 126.9977,
   });
 
   const onChange = (e) => {
@@ -36,6 +36,7 @@ function Search() {
                 Latitude: position.coords.latitude,
                 Longitude: position.coords.longitude,
               });
+              console.log("resolve", position.coords);
             },
             function (error) {
               console.error(error);
@@ -48,6 +49,7 @@ function Search() {
             }
           );
         }).then((coords) => {
+          console.log("then", coords);
           setCurrentCoords(coords);
         });
       }
