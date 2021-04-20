@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import markerImage from "../../data/img/pin_blue.png";
 import currentMarkerImage from "../../data/img/pin_red.png";
-import instaImage from "../../data/img/instagram.png";
 
 // @ts-ignore
 const { kakao } = window;

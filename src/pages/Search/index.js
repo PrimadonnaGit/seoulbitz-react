@@ -63,6 +63,14 @@ function Search() {
     <>
       <Header></Header>
 
+      <div className={"w-100 mx-auto d-flex justify-content-center"}>
+        <MapContainer
+          searchPlace={place}
+          foodieData={foodieData}
+          currentPlace={currentCoords}
+        ></MapContainer>
+      </div>
+      
       <CForm onSubmit={handleSubmit}>
         <CFormGroup className={"w-75 mt-5 mx-auto"}>
           <CInput
@@ -76,14 +84,6 @@ function Search() {
           <CButton type="submit"></CButton>
         </CFormGroup>
       </CForm>
-
-      <div className={"w-100 mx-auto d-flex justify-content-center"}>
-        <MapContainer
-          searchPlace={place}
-          foodieData={foodieData}
-          currentPlace={currentCoords}
-        ></MapContainer>
-      </div>
     </>
   );
 }

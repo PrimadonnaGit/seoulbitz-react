@@ -1,3 +1,4 @@
+import { hot } from "react-hot-loader/root";
 import React from "react";
 import "./App.scss";
 import { Route, BrowserRouter } from "react-router-dom";
@@ -13,4 +14,4 @@ function App() {
   );
 }
 
-export default App;
+export default hot(App);
