@@ -43,7 +43,7 @@ function Search() {
               resolve(currentCoords);
             },
             {
-              enableHighAccuracy: true,
+              enableHighAccuracy: false,
               maximumAge: 0,
               timeout: Infinity,
             }
@@ -70,7 +70,7 @@ function Search() {
           currentPlace={currentCoords}
         ></MapContainer>
       </div>
-      
+
       <CForm onSubmit={handleSubmit}>
         <CFormGroup className={"w-75 mt-5 mx-auto"}>
           <CInput
