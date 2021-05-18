@@ -60,7 +60,7 @@ function Search() {
     }
 
     function getKaKao() {
-      const url = "https://api.seoulbitz.click:5000/shop/"
+      const url = "https://api.seoulbitz.click/shop/"
       axios.get(url).then(function (response) {
         setPlaceData(response.data);
       }).catch(function (error) {
