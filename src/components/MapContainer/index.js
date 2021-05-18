@@ -18,7 +18,6 @@ const MapContainer = ({ searchPlace, foodieData, currentPlace }) => {
   const [markers, setMarkers] = useState([]);
 
   useEffect(() => {
-    console.log("map", currentPlace);
     const map = new kakao.maps.Map(document.getElementById("myMap"), {
       center: new kakao.maps.LatLng(
         currentPlace.Latitude,
@@ -82,20 +81,18 @@ const MapContainer = ({ searchPlace, foodieData, currentPlace }) => {
     function displayMarker(place, icon, clickable) {
       const marker = new kakao.maps.Marker({
         map: map,
-        position: new kakao.maps.LatLng(place.y, place.x),
+        position: new kakao.maps.LatLng(place.X, place.Y),
         image: icon,
         clickable: true,
       });
 
       if (clickable) {
         // https://map.kakao.com/?urlLevel=3&q=%EB%B4%87%EB%B4%87%EB%B4%87&map_type=TYPE_MAP
-        const kakaoSearchURL = `https://map.kakao.com/?urlLevel=3&q=${place.title}&map_type=TYPE_MAP`;
+        const kakaoSearchURL = `https://map.kakao.com/?urlLevel=3&q=${place.Title}&map_type=TYPE_MAP`;
         const iwContent = `<div class="customoverlay">
-          <a class="link insta" href="${place.insta}" target="_blank" rel="noreferrer">
             <span class="title">
-              ${place.title}
+              ${place.Title}
             </span>
-          </a>
           </div>
           <a class="link kakao" href="${kakaoSearchURL}" target="_blank" rel="noreferrer">
           
@@ -104,7 +101,7 @@ const MapContainer = ({ searchPlace, foodieData, currentPlace }) => {
 
         const customOverlay = new kakao.maps.CustomOverlay({
           map: map,
-          position: new kakao.maps.LatLng(place.y, place.x),
+          position: new kakao.maps.LatLng(place.X, place.Y),
           content: iwContent,
           yAnchor: 1,
           clickable: true,

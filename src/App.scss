@@ -1,4 +1,4 @@
-@import "~@coreui/coreui/scss/coreui";
+@import '~@coreui/coreui/scss/coreui';
 
 #myMap {
   width: 100%;
@@ -11,12 +11,14 @@
   border-radius: 6px;
   border: 1px solid #ccc;
   border-bottom: 2px solid #ddd;
+  background: #fff;
 }
 .customoverlay:nth-of-type(n) {
   border: 0;
   // border-top: 1px solid #004390;
   box-shadow: 0px 1px 2px #888;
 }
+
 .customoverlay a.insta {
   display: block;
   text-decoration: none;
@@ -26,7 +28,7 @@
   font-size: 14px;
   font-weight: bold;
   overflow: hidden;
-  background: #fff url("data/img/instagram.png") no-repeat right 12px center;
+  background: #fff url('data/img/instagram.png') no-repeat right 12px center;
   background-size: 20px 20px;
 }
 
@@ -36,7 +38,7 @@ a.kakao {
   width: 20px;
   height: 20px;
   bottom: 56px;
-  right: 37px;
+  right: 15px;
   float: right;
   text-decoration: none;
   color: #000;
@@ -45,7 +47,7 @@ a.kakao {
   padding: 5px 0px 0px 20px;
   margin-left: 66px;
   font-weight: bold;
-  background: url("data/img/kakaomap.png") no-repeat left 0px center;
+  background: url('data/img/kakaomap.png') no-repeat left 0px center;
   background-size: cover;
 }
 
@@ -53,20 +55,20 @@ a.kakao {
   display: block;
   text-align: center;
   background: #fff;
-  margin-right: 60px;
+  margin-right: 30px;
   padding: 10px;
   font-size: 14px;
   font-weight: bold;
 }
 .customoverlay:after {
-  content: "";
+  content: '';
   position: absolute;
   margin-left: -12px;
   left: 50%;
   bottom: -12px;
   width: 22px;
   height: 12px;
-  background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png");
+  background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png');
 }
 
 @keyframes blink {

@@ -3,13 +3,16 @@ import MapContainer from "src/components/MapContainer";
 import Header from "./../../components/Header/index";
 import { CForm, CFormGroup, CInput, CButton } from "@coreui/react";
 // @ts-ignore
-import foodieData from "../../data/foodie";
+// import foodieData from "../../data/foodie";
 // // @ts-ignore
 // import subwayData from "../../data/subway";
+import axios from "axios";
+
 
 function Search() {
   const [inputText, setInputText] = useState("");
   const [place, setPlace] = useState("");
+  const [placeData, setPlaceData] = useState([]);
   const [currentCoords, setCurrentCoords] = useState({
     Latitude: 37.5682,
     Longitude: 126.9977,
@@ -36,10 +39,10 @@ function Search() {
                 Latitude: position.coords.latitude,
                 Longitude: position.coords.longitude,
               });
-              console.log("resolve", position.coords);
+              // console.log("resolve", position.coords);
             },
             function (error) {
-              console.error(error);
+              // console.error(error);
               resolve(currentCoords);
             },
             {
@@ -49,24 +52,41 @@ function Search() {
             }
           );
         }).then((coords) => {
-          console.log("then", coords);
+          // console.log("then", coords);
           setCurrentCoords(coords);
         });
       }
       console.info("GPS를 지원하지 않습니다");
     }
 
+    function getKaKao() {
+      const url = "http://54.180.145.175:5000/shop/"
+      axios.get(url).then(function (response) {
+        setPlaceData(response.data);
+      }).catch(function (error) {
+        // setPlaceData(foodieData);
+        console.log(error);
+      })
+    }
+
     getLocation();
+    getKaKao();
   }, []);
+
+
+  if (!placeData.length) {
+    return ''
+  }
 
   return (
     <>
       <Header></Header>
 
       <div className={"w-100 mx-auto d-flex justify-content-center"}>
+
         <MapContainer
           searchPlace={place}
-          foodieData={foodieData}
+          foodieData={placeData}
           currentPlace={currentCoords}
         ></MapContainer>
       </div>
