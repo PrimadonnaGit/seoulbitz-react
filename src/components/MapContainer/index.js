@@ -1,27 +1,32 @@
-import React, { useEffect, useState } from "react";
-import markerImage from "../../data/img/pin_blue.png";
-import currentMarkerImage from "../../data/img/pin_red.png";
+import React, { useEffect, useState } from 'react';
+import foodMarkerImage from '../../data/img/pin_blue.png';
+import cafeMarkerImage from '../../data/img/pin_orange.png';
+import currentMarkerImage from '../../data/img/pin_red.png';
 
 // @ts-ignore
 const { kakao } = window;
 
-const defaultIcon = new kakao.maps.MarkerImage(
-  markerImage,
-  new kakao.maps.Size(25, 25)
+const foodIcon = new kakao.maps.MarkerImage(
+  foodMarkerImage,
+  new kakao.maps.Size(25, 25),
+);
+const cafeIcon = new kakao.maps.MarkerImage(
+  cafeMarkerImage,
+  new kakao.maps.Size(25, 25),
 );
 const currentPositionIcon = new kakao.maps.MarkerImage(
   currentMarkerImage,
-  new kakao.maps.Size(25, 25)
+  new kakao.maps.Size(25, 25),
 );
 
 const MapContainer = ({ searchPlace, foodieData, currentPlace }) => {
   const [markers, setMarkers] = useState([]);
 
   useEffect(() => {
-    const map = new kakao.maps.Map(document.getElementById("myMap"), {
+    const map = new kakao.maps.Map(document.getElementById('myMap'), {
       center: new kakao.maps.LatLng(
         currentPlace.Latitude,
-        currentPlace.Longitude
+        currentPlace.Longitude,
       ),
       level: 3,
     });
@@ -29,14 +34,14 @@ const MapContainer = ({ searchPlace, foodieData, currentPlace }) => {
     const currentCircle = new kakao.maps.Circle({
       center: new kakao.maps.LatLng(
         currentPlace.Latitude,
-        currentPlace.Longitude
+        currentPlace.Longitude,
       ), // 원의 중심좌표 입니다
       radius: 10, // 미터 단위의 원의 반지름입니다
       strokeWeight: 3, // 선의 두께입니다
-      strokeColor: "red", // 선의 색깔입니다
+      strokeColor: 'red', // 선의 색깔입니다
       strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-      strokeStyle: "", // 선의 스타일 입니다
-      fillColor: "red", // 채우기 색깔입니다
+      strokeStyle: '', // 선의 스타일 입니다
+      fillColor: 'red', // 채우기 색깔입니다
       fillOpacity: 0.4, // 채우기 불투명도 입니다
     });
 
@@ -50,14 +55,24 @@ const MapContainer = ({ searchPlace, foodieData, currentPlace }) => {
 
     // 클러스터러 초기화
     setMarkers([]);
-    if (searchPlace !== "") {
+    if (searchPlace !== '') {
       place.keywordSearch(searchPlace, placesSearchCB);
       foodieData.map((item) => {
-        displayMarker(item, defaultIcon, true);
+        displayMarker(item, foodIcon, true);
       });
     } else {
       foodieData.map((item) => {
-        displayMarker(item, defaultIcon, true);
+        // console.log(item.Title, item.Tag);
+        if (
+          item.Tag.includes('커피') ||
+          item.Tag.includes('카페') ||
+          item.Tag.includes('제과') ||
+          item.Tag.includes('베이커리')
+        ) {
+          displayMarker(item, cafeIcon, true);
+        } else {
+          displayMarker(item, foodIcon, true);
+        }
       });
     }
 
@@ -111,12 +126,12 @@ const MapContainer = ({ searchPlace, foodieData, currentPlace }) => {
         customOverlay.setMap(null);
 
         // 상점 클릭 시 오버레이 열기
-        kakao.maps.event.addListener(marker, "click", function () {
+        kakao.maps.event.addListener(marker, 'click', function () {
           customOverlay.setMap(map);
         });
 
         // 맵 클릭 시 오버레이 닫기
-        kakao.maps.event.addListener(map, "click", function () {
+        kakao.maps.event.addListener(map, 'click', function () {
           customOverlay.setMap(null);
         });
       }
