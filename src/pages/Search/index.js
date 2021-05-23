@@ -24,11 +24,11 @@ function Search() {
   };
 
   const onChangeMinScore = (e) => {
-    setMinScore(e.target.value);
+    setMinScore(e.target.value > 5 ? 5 : e.target.value);
   };
 
   const onChangeMinScoreCount = (e) => {
-    setMinScoreCount(e.target.value);
+    setMinScoreCount(e.target.value > 1000 ? 1000 : e.target.value);
   };
 
   const handleSubmit = (e) => {
@@ -102,7 +102,7 @@ function Search() {
       </div>
 
       <CForm onSubmit={handleSubmit}>
-        <CFormGroup className={'w-75 mt-5 mx-auto'}>
+        <CFormGroup className={'w-100 mx-auto'}>
           <CInput
             type="text"
             id="searchPlace"
@@ -113,12 +113,12 @@ function Search() {
           />
           <CButton type="submit"></CButton>
         </CFormGroup>
-        <CFormGroup className={'w-25 mx-auto d-flex'}>
+        <CFormGroup className={'d-flex'}>
           <CInput
             type="text"
             id="minScore"
             name="minScore"
-            className={'mx-5'}
+            className={'mx-1'}
             placeholder="최소 점수"
             onChange={onChangeMinScore}
             value={minScore}
@@ -127,7 +127,7 @@ function Search() {
             type="text"
             id="minScoreCount"
             name="minScoreCount"
-            className={'mx-5'}
+            className={'mx-1'}
             placeholder="최소 리뷰수"
             onChange={onChangeMinScoreCount}
             value={minScoreCount}
