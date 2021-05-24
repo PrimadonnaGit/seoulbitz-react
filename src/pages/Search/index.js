@@ -24,11 +24,17 @@ function Search() {
   };
 
   const onChangeMinScore = (e) => {
-    setMinScore(e.target.value > 5 ? 5 : e.target.value);
+    const targetValue = parseFloat(e.target.value);
+    if (targetValue && targetValue !== minScore) {
+      setMinScore(e.target.value > 5 ? 5 : e.target.value);
+    }
   };
 
   const onChangeMinScoreCount = (e) => {
-    setMinScoreCount(e.target.value > 1000 ? 1000 : e.target.value);
+    const targetValue = parseFloat(e.target.value);
+    if (targetValue && targetValue !== minScoreCount) {
+      setMinScoreCount(e.target.value > 1000 ? 1000 : e.target.value);
+    }
   };
 
   const handleSubmit = (e) => {
@@ -82,7 +88,13 @@ function Search() {
 
   useEffect(() => {
     getLocation();
-    getKaKao();
+
+    const timeoutId = setTimeout(() => {
+      getKaKao();
+    }, 1000);
+
+    return () => clearTimeout(timeoutId)
+
   }, [minScore, minScoreCount]);
 
   if (!placeData.length) {
@@ -121,7 +133,7 @@ function Search() {
             className={'mx-1'}
             placeholder="최소 점수"
             onChange={onChangeMinScore}
-            value={minScore}
+          // value={minScore}
           />
           <CInput
             type="text"
@@ -130,7 +142,7 @@ function Search() {
             className={'mx-1'}
             placeholder="최소 리뷰수"
             onChange={onChangeMinScoreCount}
-            value={minScoreCount}
+          // value={minScoreCount}
           />
         </CFormGroup>
       </CForm>

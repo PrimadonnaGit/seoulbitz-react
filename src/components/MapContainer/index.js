@@ -57,11 +57,15 @@ const MapContainer = ({ searchPlace, foodieData, currentPlace }) => {
     setMarkers([]);
     if (searchPlace !== '') {
       place.keywordSearch(searchPlace, placesSearchCB);
-      foodieData.map((item) => {
-        displayMarker(item, foodIcon, true);
-      });
-    } else {
-      foodieData.map((item) => {
+    }
+
+    displayData(foodieData);
+
+    // TODO
+    // clusterer.addMarkers(markers);
+
+    function displayData(data) {
+      data.map((item) => {
         // console.log(item.Title, item.Tag);
         if (
           item.Tag.includes('커피') ||
@@ -76,14 +80,11 @@ const MapContainer = ({ searchPlace, foodieData, currentPlace }) => {
       });
     }
 
-    // TODO
-    // clusterer.addMarkers(markers);
 
     // 검색 결과 첫번 째 장소로 지도 이동
     function placesSearchCB(data, status, pagination) {
       if (status === kakao.maps.services.Status.OK) {
         let bounds = new kakao.maps.LatLngBounds();
-        console.log(data);
 
         displayMarker(data[0], currentPositionIcon, false);
         bounds.extend(new kakao.maps.LatLng(data[0].y, data[0].x));
